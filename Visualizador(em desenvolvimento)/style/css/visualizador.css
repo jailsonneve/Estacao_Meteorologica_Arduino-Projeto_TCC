@@ -1,0 +1,37 @@
+/* Ajuste para telas maiores (PC) */
+body {
+    padding-top: 250px; /* Ajuste conforme a altura da sua navbar */
+}
+.gambiarra{
+    margin-left: 25px;
+}
+.card{
+    border-radius: 10px;
+}
+.dadosRegistro h2, .dadosRegistro .gambiarra {
+    margin-left: 2px;
+}
+.custom-bi {
+    margin-left: 5px;
+}
+/* Ajuste para telas menores (celular) */
+@media (max-width: 767px) {
+    body {
+        padding-top: 350px; /* Reduz o espaçamento para telas pequenas */
+    }
+
+    .gambiarra {
+        margin-left: 25px; /* Ajuste de margens para telas pequenas */
+    }
+
+    .dadosRegistro h2, .dadosRegistro .gambiarra {
+        margin-left: 5px;
+    }
+
+    .custom-bi {
+        margin-left: 5px; /* Reduz a margem da custom icon */
+    }
+    button{
+        margin-left: 8px;
+    }
+}

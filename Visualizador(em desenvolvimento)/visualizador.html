@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizar Dados do Firebase</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style/css/visualizador.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="bg-dark text-white text-center py-4 fixed-top" id="inicio">
+    <div class="container" id="nomeEstação"></div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="listEstacao.html">Minhas Estações</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#inicio">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#dados">Dados</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#dadosRegitro">Dados do Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#dadosSensores">Dados dos Sensores</a>
+          </li>
+        </ul>
+      </div>
+      <div class="d-flex align-items-center ms-auto">
+        <form id="searchForm" class="d-flex align-items-center me-2">
+          <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar Dados" aria-label="Search"
+            style="width: 300px" />
+          <button class="btn btn-outline-primary m-lg-3 me-2 d-inline-flex align-items-center" type="submit">
+            Buscar <i class="custom-bi bi bi-search ms-2"></i>
+          </button>
+          <button class="btn btn-outline-danger d-inline-flex align-items-center" type="button"
+            onclick="window.history.back();">
+            Voltar <i class="custom-bi bi bi-arrow-left ms-2"></i>
+          </button>
+        </form>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container mt-5" id="dados">
+    <div id="dataContainer" class="mt-4">
+      <h2 class="mt-5" id="dadosRegistro">Registros</h2>
+      <!-- Os dados do Registro serão exibidos aqui -->
+      <div class="gambiarra row mt-4" id="cardsRegistro"></div>
+      <h2 class="mt-5" id="dadosSensores">Sensores</h2>
+      <div class="gambiarra row mt-4" id="dataSensors"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3" id="footer">
+    <div class="container">
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo, autem!
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts do Bootstrap e Firebase -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+    import {
+      getDatabase,
+      ref,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyA7M2fuyG3owV9dWM706YMJnqQ9Jbe6DSo",
+      authDomain: "teste-7fa12.firebaseapp.com",
+      databaseURL: "https://teste-7fa12-default-rtdb.firebaseio.com",
+      projectId: "teste-7fa12",
+      storageBucket: "teste-7fa12.appspot.com",
+      messagingSenderId: "340432857585",
+      appId: "1:340432857585:web:58169c01b8eaa901dafc50",
+      measurementId: "G-ZB0X9DV029",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase();
+
+    function fetchData() {
+      const estacao = getEstacaoId();
+      const caminhoSensores = "/"+estacao+"/sensores/";
+      const caminhoRegistro = "/"+estacao+"/data";
+      const dbRef = ref(db, caminhoRegistro);
+      const dbRefSensores = ref(db, caminhoSensores);
+
+      onValue(dbRef, (snapshot) => {
+        const registros = snapshot.val();
+        const cardsContainer = document.getElementById("cardsRegistro");
+
+        cardsContainer.innerHTML = "";
+
+        if (registros) {
+          Object.keys(registros).forEach((id) => {
+            const data = registros[id];
+            // Cria o HTML do card com os dados
+            const card = `
+                          <div class="col-md-6 col-lg-4 mb-4">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <div class="d-flex justify-content-between align-items-center mb-3">
+                                          <h5 class="card-title mb-0">Data: ${id}</h5>
+                                      </div>
+                                      <p class="card-text font-weight-bold">Iluminação: <span class="font-weight-normal">${data.Iluminacao || "0"
+              }</span></p>
+                                      <p class="card-text font-weight-bold">Temperatura: <span class="font-weight-normal">${data.Temperatura || "0"
+              }°C</span></p>
+                                      <p class="card-text font-weight-bold">Umidade: <span class="font-weight-normal">${data.Umidade || "0"
+              }%</span></p>
+                                  </div>
+                              </div>
+                          </div>
+                      `;
+            // Adiciona o card ao container
+            cardsContainer.innerHTML += card;
+          });
+        } else {
+          cardsContainer.innerHTML = "<p>Nenhum registro encontrado.</p>";
+        }
+      });
+      onValue(dbRefSensores, (snapshot) => {
+        const sensores = snapshot.val();
+        const cardsContainer = document.getElementById("dataSensors");
+        cardsContainer.innerHTML = ""; // Limpa o container para adicionar os novos dados dos sensores
+        if (sensores) {
+          Object.keys(sensores).forEach((id) => {
+            const data = sensores[id];
+            const card = `
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text font-weight-bold">${id}: <span class="font-weight-normal">${data || "0"
+              }</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+            // Adiciona o card ao container
+            cardsContainer.innerHTML += card;
+          });
+        } else {
+          cardsContainer.innerHTML =
+            "<p>Nenhum dado de sensor encontrado.</p>";
+        }
+      });
+    }
+    document
+      .getElementById("searchForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault(); // Evita o reload da página
+
+        const searchValue = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+
+        if (searchValue) {
+          // Chama a função que vai buscar os dados de acordo com o valor da pesquisa
+          searchInFirebase(searchValue);
+        }
+        document.getElementById("searchInput").value = "";
+      });
+
+    function searchInFirebase(searchValue) {
+      const estacao = getEstacaoId();
+      const caminhoSensores = "/"+estacao+"/sensores/";
+      const caminhoRegistro = "/"+estacao+"/data";
+      const dbRef = ref(db, caminhoRegistro);
+      const dbRefSensores = ref(db, caminhoSensores);
+
+      // Filtra os registros
+      onValue(dbRef, (snapshot) => {
+        const registros = snapshot.val();
+        const cardsContainer = document.getElementById("cardsRegistro");
+
+        cardsContainer.innerHTML = ""; // Limpa o container
+
+        if (registros) {
+          Object.keys(registros).forEach((id) => {
+            const data = registros[id];
+
+            // Faz a busca nas chaves ou valores (ajuste conforme sua necessidade)
+            const matchesSearch =
+              id.toLowerCase().includes(searchValue) ||
+              String(data.Iluminacao || "")
+                .toLowerCase()
+                .includes(searchValue) ||
+              String(data.Temperatura || "")
+                .toLowerCase()
+                .includes(searchValue) ||
+              String(data.Umidade || "")
+                .toLowerCase()
+                .includes(searchValue);
+
+            if (matchesSearch) {
+              const card = `
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Data: ${id}</h5>
+                        <p class="card-text">Iluminação: ${data.Iluminacao || "0"
+                }</p>
+                        <p class="card-text">Temperatura: ${data.Temperatura || "0"
+                }°C</p>
+                        <p class="card-text">Umidade: ${data.Umidade || "0"}%</p>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              cardsContainer.innerHTML += card; // Adiciona os resultados encontrados
+            }
+          });
+        } else {
+          cardsContainer.innerHTML = "<p>Nenhum registro encontrado.</p>";
+        }
+      });
+
+      // Filtra os dados dos sensores
+      onValue(dbRefSensores, (snapshot) => {
+        const sensores = snapshot.val();
+        const cardsContainer = document.getElementById("dataSensors");
+
+        cardsContainer.innerHTML = ""; // Limpa o container
+
+        if (sensores) {
+          Object.keys(sensores).forEach((id) => {
+            const valor = sensores[id];
+
+            // Faz a busca no nome do sensor ou no valor
+            const matchesSearch =
+              id.toLowerCase().includes(searchValue) ||
+              String(valor || "")
+                .toLowerCase()
+                .includes(searchValue);
+
+            if (matchesSearch) {
+              const card = `
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <p class="card-text font-weight-bold">${id}: <span class="font-weight-normal">${valor || "0"
+                }</span></p>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              cardsContainer.innerHTML += card; // Adiciona os resultados encontrados
+            }
+          });
+        } else {
+          cardsContainer.innerHTML =
+            "<p>Nenhum dado de sensor encontrado.</p>";
+        }
+      });
+    }
+    // Função para obter o ID da estação da URL
+    function getEstacaoId() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const estacao = urlParams.get('estacao')
+      const idTitulo = document.getElementById("nomeEstação")
+      idTitulo.innerHTML = ""; // Limpa o container
+      const titulo = `
+        <h1 class="mt-5">Dados do Firebase da Estação ${estacao}</h1>
+      `
+      idTitulo.innerHTML += titulo
+      return estacao;
+    }
+    getEstacaoId();
+    fetchData();
+  </script>
+</body>
+
+</html>
