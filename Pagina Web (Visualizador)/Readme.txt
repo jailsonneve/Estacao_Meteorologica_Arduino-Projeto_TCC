@@ -1,0 +1,1 @@
+Olá novamente, a pasta js são os dois arquivos originais, dentro de static tem o css e uma pasta vazia com o nome imagens, a pasta teste como o nome diz tem htmls teste. Sinta-se a vontade para fazer oque achar melhor, apenas um aviso: NÃO delete o dispositivo com o nome de "ema", é o dispositivo da escola.

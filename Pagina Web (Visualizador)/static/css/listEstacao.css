@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    padding-top: 150px; /* Espaço para a navbar fixa */
+}
+@media (max-width: 576px) {
+    body{
+        padding-top: 150px;
+    }
+    .form-control {
+        width: 100%; /* Faz com que o input ocupe toda a largura em telas pequenas */
+    }
+    .btnVoltar{
+        margin-bottom: -5px !important;
+        margin-top: 20px !important;
+        height: 38px;
+    }
+    .btnBuscar{
+        margin-top: 20px !important;
+    }
+    .btnAdd{
+        margin-top: 0px !important;
+    }
+}
+.btn {
+    display: flex; /* Usar flexbox */
+    align-items: center; /* Alinha verticalmente */
+}
+.btn i {
+    margin-left: 4px; /* Espaço entre o texto e o ícone */
+}

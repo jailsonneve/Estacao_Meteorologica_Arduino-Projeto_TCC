@@ -1,0 +1,14 @@
+<script>
+    // Sua string
+    const dataString = "2024-10-10 16:27:03";
+
+    // Substituindo o espaço por 'T' para o formato ISO 8601
+    const dataISO = dataString.replace(" ", "T");
+
+    // Criando o objeto Date
+    const data = new Date(dataISO);
+
+    // Exibindo o resultado
+    alert(`Data: ${data} \nDataISO: ${dataISO} \nData String: ${dataString}`)
+    console.log(data);
+</script>

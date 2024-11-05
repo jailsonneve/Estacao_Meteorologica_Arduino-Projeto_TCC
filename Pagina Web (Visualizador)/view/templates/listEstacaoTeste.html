@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/listEstacao.css">
+    <title>Estações Meteorológicas</title>
+</head>
+<body>
+    <p id="inicio"></p>
+
+    <!-- Header -->
+    <header class="bg-dark text-white text-center py-4 fixed-top">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid justify-content-end">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#inicio">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#estacoes">Dispositivos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#footer">Contato</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex flex-column flex-sm-row align-items-center ms-auto">
+                        <form class="d-flex flex-column flex-sm-row align-items-center mb-2 mb-sm-0" id="searchForm">
+                            <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar Estação" aria-label="Search" style="min-width: 200px;">
+                            <div class="d-flex flex-sm-row">
+                                <button class="btnBuscar btn btn-outline-primary me-2 mb-2 mb-sm-0" type="submit">
+                                    Buscar <i class="bi bi-search ms-2"></i>
+                                </button>
+                                <button class="btnVoltar btn btn-outline-danger me-2 mb-2 mb-sm-0" type="button" onclick="window.history.back();">
+                                    Voltar <i class="bi bi-arrow-left ms-2"></i>
+                                </button>
+                            </div>
+                        </form>                        
+                        <button class="btnAdd btn btn-outline-success mt-2 mt-sm-0 me-2" type="button" data-bs-toggle="modal" data-bs-target="#cadastrarDispositivo">
+                            Adicionar <i class="bi bi-plus-circle ms-2"></i>
+                        </button>
+                    </div>                    
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container-fluid my-5" id="estacoes">
+        <h1 class="mb-4 text-center">Lista de Dispositivos</h1>
+        <div class="d-flex justify-content-center align-items-center row" id="cardsEstacoes">
+            <!-- Cards das estações serão injetados aqui -->
+        </div>
+
+        <!-- Modal para cadastrar dispositivo -->
+        <div class="modal fade" id="cadastrarDispositivo" tabindex="-1" aria-labelledby="cadastrarDispositivoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cadastrarDispositivoLabel">Cadastrar Novo Dispositivo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formCadastrarDispositivo">
+                            <div class="mb-3">
+                                <label for="nomeDispositivo" class="form-label">Nome do Dispositivo</label>
+                                <input type="text" class="form-control" id="nomeDispositivo" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descricaoDispositivo" class="form-label">Descrição do Dispositivo</label>
+                                <textarea class="form-control" id="descricaoDispositivo"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="localizacao" class="form-label">Localização</label>
+                                <input type="text" class="form-control" id="localizacao" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="status" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tipoDispositivo" class="form-label">Tipo do Dispositivo</label>
+                                <input type="text" class="form-control" id="tipoDispositivo" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dthr_Instalacao" class="form-label">Data e Hora da Instalação</label>
+                                <input type="datetime-local" class="form-control" id="dthr_Instalacao" required>
+                            </div>
+                            <div class="mb-3">
+                                <p class="card-text">Lista de Sensores:</p>
+                                <ul class="list-unstyled" id="listaSensores"></ul>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btnCadastrar" data-bs-dismiss="modal">Cadastrar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3" id="footer">
+        <div class="container-fluid">
+            <p>&copy; 2024 Dispositivos Existentes. Todos os direitos reservados.</p>
+            <div class="d-flex justify-content-center mb-2">
+                <a href="#inicio" class="text-white me-3">Volte ao Início</a>
+                <a href="#estacoes" class="text-white me-3">Veja os Dispositivos</a>
+                <a href="#footer" class="text-white">Contate-nos</a>
+            </div>
+            <div>
+                <a href="https://www.facebook.com" target="_blank" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                <a href="https://www.twitter.com" target="_blank" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.instagram.com" target="_blank" class="text-white"><i class="bi bi-instagram"></i></a>
+            </div>
+            <p class="mt-2">Entre em contato: <a href="mailto:contato@estacoes.com" class="text-white">contato@estacoes.com</a></p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase JS SDK -->
+    <script type="module" src="../../controller/controllerListDisp.js"></script>
+</body>
+</html>

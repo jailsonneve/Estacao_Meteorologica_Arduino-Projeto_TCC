@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerar PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #pdfContent {
+            width: 210mm; /* Largura A4 */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        canvas {
+            width: 100% !important; /* Garante que o canvas ocupe toda a largura */
+            height: auto !important; /* Mantém a proporção */
+        }
+        #chartContainer {
+            height: 400px; /* Altura fixa para o gráfico */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pdfContent">
+        <div id="chartContainer">
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <div id="infoDiv">
+            <h2>Informações Importantes</h2>
+            <p>Aqui estão algumas informações que você gostaria de incluir no PDF.</p>
+        </div>
+    </div>
+
+    <button id="downloadBtn">Baixar PDF</button>
+
+    <script>
+        // Configuração do Chart.js
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Função para baixar o PDF
+        document.getElementById('downloadBtn').addEventListener('click', function () {
+            const element = document.getElementById('pdfContent');
+            html2pdf()
+                .from(element)
+                .set({
+                    margin: 0, // Margens do PDF
+                    filename: 'document.pdf',
+                    html2canvas: { scale: 3 }, // Aumenta a escala para melhor resolução
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                })
+                .save();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    padding-top: 150px; /* Ajuste conforme a altura da sua navbar */
+}
+.gambiarra{
+    margin-left: 25px;
+}
+.card{
+    border-radius: 10px;
+}
+.dadosRegistro h2, .dadosRegistro .gambiarra {
+    margin-left: 2px;
+}
+.custom-bi {
+    margin-left: 5px;
+}
+.divBtn .btn {
+    display: flex; /* Usar flexbox */
+    align-items: center; /* Alinha verticalmente */
+}
+#meuGrafico {
+    width: 100%;
+    height: auto; /* ou um valor fixo como '400px' */
+}
+.divGrafico{
+    width: 100%; 
+    min-height: 600px;
+}
+.tituloCard{
+    margin-left: 80px;
+}
+/* Ajuste para telas menores (celular) */
+@media (max-width: 576px) {
+    body {
+        padding-top: 100px; /* Reduz o espaçamento para telas pequenas */
+    }
+
+    .navbar-nav {
+        flex-direction: column; /* Coloca os links da navbar em coluna */
+        align-items: center; /* Centraliza os links */
+    }
+
+    #searchForm {
+        flex-direction: column; /* Coloca os inputs e botões em coluna */
+    }
+
+    button {
+        margin-left: 0; /* Remove margem à esquerda dos botões */
+        margin-top: 8px; /* Adiciona espaçamento entre os botões */
+    }
+
+    .custom-bi {
+        margin-left: 5px; /* Reduz a margem da custom icon */
+    }
+    form{
+        align-self: center;
+    }
+    .inDataI{
+        margin-bottom: 10px;
+    }
+    .inDataF{
+        margin-top: 5px;
+    }
+    .btnT{
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+    .btnB{
+        margin-left: 40px;
+    }
+    .tituloCard{
+        margin-left: 60px;
+    }
+    .divBtn{
+        margin-top: 15px;
+    }
+}

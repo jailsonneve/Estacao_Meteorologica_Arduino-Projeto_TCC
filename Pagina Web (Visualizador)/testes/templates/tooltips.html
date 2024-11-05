@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip Personalizado</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <style>
+        /* Personalizando a cor do tooltip */
+        .tooltip-inner {
+            background-color: #007bff; /* Cor de fundo personalizada */
+            color: #fff; /* Cor do texto */
+            border-radius: 5px; /* Bordas arredondadas */
+        }
+
+        .tooltip-arrow {
+            border-top-color: #007bff; /* Cor da seta do tooltip */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <button id="btnAlterar" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editarDispositivo">
+        <i class="bi bi-pencil-square"></i>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editarDispositivo" tabindex="-1" aria-labelledby="editarDispositivoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarDispositivoLabel">Editar Dispositivo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Conteúdo do modal -->
+                    Formulário para editar dispositivo.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Salvar alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        // Inicializa o tooltip
+        var tooltip = new bootstrap.Tooltip($('#btnAlterar')[0], {
+            title: "Alterar Informações",
+            placement: "top"
+        });
+
+        // Exibe o tooltip ao passar o mouse
+        $('#btnAlterar').on('mouseenter', function () {
+            tooltip.show();
+        }).on('mouseleave', function () {
+            tooltip.hide();
+        });
+    });
+</script>
+
+</body>
+</html>

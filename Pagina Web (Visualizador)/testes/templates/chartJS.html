@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Medições</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        canvas {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        .controls {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label>
+            <input type="checkbox" id="toggleTemperature" checked>
+            Temperatura
+        </label>
+        <label>
+            <input type="checkbox" id="toggleHumidity" checked>
+            Umidade
+        </label>
+        <label>
+            <input type="checkbox" id="toggleLight" checked>
+            Iluminação
+        </label>
+    </div>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+        // Dados de exemplo
+        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+        const temperatureData = [22, 21, 25, 24, 26, 27];
+        const humidityData = [55, 60, 58, 62, 65, 63];
+        const lightData = [200, 180, 220, 240, 250, 230];
+
+        // Configuração do gráfico
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Temperatura (°C)',
+                        data: temperatureData,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        fill: false,
+                    },
+                    {
+                        label: 'Umidade (%)',
+                        data: humidityData,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        fill: false,
+                    },
+                    {
+                        label: 'Iluminação (Lux)',
+                        data: lightData,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false,
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Função para atualizar a visibilidade dos datasets
+        function updateChart() {
+            const temperatureVisible = document.getElementById('toggleTemperature').checked;
+            const humidityVisible = document.getElementById('toggleHumidity').checked;
+            const lightVisible = document.getElementById('toggleLight').checked;
+
+            myChart.data.datasets[0].hidden = !temperatureVisible; // Temperatura
+            myChart.data.datasets[1].hidden = !humidityVisible;   // Umidade
+            myChart.data.datasets[2].hidden = !lightVisible;      // Iluminação
+
+            myChart.update();
+        }
+
+        // Adiciona eventos de mudança para os checkboxes
+        document.getElementById('toggleTemperature').addEventListener('change', updateChart);
+        document.getElementById('toggleHumidity').addEventListener('change', updateChart);
+        document.getElementById('toggleLight').addEventListener('change', updateChart);
+    </script>
+</body>
+</html>

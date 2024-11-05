@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover Effect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button id="my-button">Passe o mouse aqui</button>
+    <div id="message" style="display: none;">Você passou o mouse sobre o botão!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<script>
+    // Seleciona o botão e a mensagem
+    const button = document.getElementById('my-button');
+    const message = document.getElementById('message');
+
+    // Adiciona o evento mouseover
+    button.addEventListener('mouseover', () => {
+        message.style.display = 'block'; // Mostra a mensagem
+    });
+
+    // Adiciona o evento mouseout
+    button.addEventListener('mouseout', () => {
+        message.style.display = 'none'; // Esconde a mensagem
+    });
+</script>

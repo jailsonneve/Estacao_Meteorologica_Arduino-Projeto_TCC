@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Sensores - Chart.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Gráfico de Dados dos Sensores</h1>
+        <canvas id="meuGrafico" width="400" height="200"></canvas>
+        
+        <form id="searchForm" class="d-flex align-items-center mt-3">
+            <input class="form-control me-2" type="date" id="dataInicio" placeholder="Data Início" aria-label="Data Início" />
+            <input class="form-control me-2" type="date" id="dataFim" placeholder="Data Fim" aria-label="Data Fim" />
+            <button class="btn btn-outline-primary m-lg-3 me-2" type="button" onclick="filtrarPorData()">
+              Buscar <i class="bi bi-search ms-2"></i>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const dadosSensores = [
+            { data: '2023-10-01', valor: 15 },
+            { data: '2023-10-02', valor: 20 },
+            { data: '2023-10-10', valor: 30 },
+            { data: '2023-10-15', valor: 25 },
+            { data: '2023-11-01', valor: 40 },
+            { data: '2023-11-05', valor: 45 },
+            // adicione mais dados conforme necessário
+        ];
+
+        const labels = dadosSensores.map(item => item.data);
+        const valores = dadosSensores.map(item => item.valor);
+
+        const ctx = document.getElementById('meuGrafico').getContext('2d');
+        const meuGrafico = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Dados dos Sensores',
+                    data: valores,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Data'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Valor'
+                        }
+                    }
+                }
+            }
+        });
+
+        function filtrarPorData() {
+            const inicio = document.getElementById('dataInicio').value;
+            const fim = document.getElementById('dataFim').value;
+
+            if (!inicio || !fim) {
+                alert('Por favor, preencha ambas as datas.');
+                return;
+            }
+
+            const dadosFiltrados = dadosSensores.filter(item => {
+                const dataItem = new Date(item.data);
+                return dataItem >= new Date(inicio) && dataItem <= new Date(fim);
+            });
+
+            const labelsFiltrados = dadosFiltrados.map(item => item.data);
+            const valoresFiltrados = dadosFiltrados.map(item => item.valor);
+
+            meuGrafico.data.labels = labelsFiltrados;
+            meuGrafico.data.datasets[0].data = valoresFiltrados;
+            meuGrafico.update();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visualizar Dados do Firebase</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/visualizador.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="inicio"></div>
+    <!-- Header -->
+    <header class="bg-dark text-white text-center py-4 fixed-top">
+      <div class="container" id="nomeEstação"></div>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-2">
+        <a class="navbar-brand ml-4" href="listEstacaoTeste.html">Meus Dispositivos</a>
+        <button class="btnT navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav flex-column flex-sm-row">
+              <li class="nav-item">
+                  <a class="nav-link" href="#inicio">Início</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#dadosInfo">Informações do Dispositivo</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#dadosGrafico">Gráfico dos Valores</a>
+              </li>
+          </ul>
+          <div class="d-flex flex-column flex-sm-row align-items-start ms-auto">
+              <form id="searchForm" class="d-flex align-items-center mt-0 flex-column flex-sm-row">
+                  <input class="inDataI form-control mr-2" type="datetime-local" id="dataInicio" placeholder="Data Início" aria-label="Data Início" />
+                  <input class="inDataF form-control mr-2" type="datetime-local" id="dataFim" placeholder="Data Fim" aria-label="Data Fim"/>
+                  <div class="divBtn d-flex flex-sm-row">
+                      <button id="btnSubmit" class="btnB btn btn-outline-primary me-2" type="button">
+                          Buscar <i class="custom-bi bi bi-search ms-2"></i>
+                      </button>
+                      <button class="btn btn-outline-danger mr-4" type="button" onclick="window.history.back();">
+                          Voltar <i class="custom-bi bi bi-arrow-left ms-2"></i>
+                      </button>
+                  </div>
+              </form>
+          </div>
+      </div>      
+      </nav>
+    </header>
+    <main>
+      <!-- Main Content -->
+      <div class="container mt-5">
+        <div id="dataContainer" class="mt-4">
+          <h1 class="mt-5 mb-5 text-center" id="dadosInfo">Informações do Dispositivo</h1>
+          <!-- As informações sobre a estação serão exibidos aqui -->
+          <div class="row justify-content-center" id="info"></div>
+          <h1 class="mt-5 text-center" id="dadosGrafico">Gráfico do Dispositivo</h1>
+          <h4 id="saida" class="text-center mt-5"></h4>
+          <div class="divGrafico">
+            <!-- Os graficos serão exibidos aqui -->
+            <canvas id="myChart" class="meuGrafico m-5" style="width: 100%; height: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3" id="footer">
+      <div class="container">
+          <p>&copy; 2024 Visualizador de Dados. Todos os direitos reservados.</p>
+          <div class="d-flex justify-content-center mb-2">
+              <a href="#inicio" class="text-white me-3">Volte ao Início</a>
+              <a href="#dadosInfo" class="text-white me-3">Veja as Informações do Dispositivo</a>
+              <a href="#dadosGrafico" class="text-white">Veja o Gráfico do Dispositivo</a>
+              <a href="listEstacaoTeste.html" class="text-white ml-3">Veja Seus Dispositivos</a>
+          </div>
+          <div>
+              <a href="https://www.facebook.com" target="_blank" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.twitter.com" target="_blank" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+              <a href="https://www.instagram.com" target="_blank" class="text-white"><i class="bi bi-instagram"></i></a>
+          </div>
+          <p class="mt-2">Entre em contato: <a href="mailto:contato@visualizador.com" class="text-white">contato@visualizador.com</a></p>
+      </div>
+    </footer>
+
+    <!-- Scripts do Bootstrap e Firebase -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <!-- Usar o comando python3 -m http.server 8000 para rodar um server que consiga usar o js -->
+    <script type="module" src="../../controller/controllerPagInfo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </body>
+</html>
