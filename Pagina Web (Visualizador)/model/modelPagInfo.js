@@ -150,7 +150,7 @@ export async function baixarCSV() {
         filteredMedicoes.sort((a, b) => new Date(a.dthr) - new Date(b.dthr));
 
         // Cabeçalho do CSV
-        const header = ['Data/Hora', 'Sensor ID', 'Valor'];
+        const header = ['Data', 'Hora', 'Sensor ID', 'Valor'];
         const rows = filteredMedicoes.map(medicao => {
             return [new Date(medicao.dthr).toLocaleString(), medicao.sensor_id, medicao.valor]; // Formata cada medição
         });
