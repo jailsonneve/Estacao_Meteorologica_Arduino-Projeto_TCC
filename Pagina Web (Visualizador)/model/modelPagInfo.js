@@ -183,12 +183,14 @@ export async function setDates() {
 
     // Define a data inicial como o momento atual
     const startDate = new Date(now);
+    startDate.setMinutes(startDate.getMinutes() - startDate.getTimezoneOffset());
     const formattedStartDate = startDate.toISOString().slice(0, 16);
     document.getElementById('dataInicio').value = formattedStartDate;
 
     // Define a data final como 24 horas após a data inicial
     const endDate = new Date(now);
     endDate.setHours(endDate.getHours() + 24);
+    endDate.setMinutes(endDate.getMinutes() - endDate.getTimezoneOffset());
     const formattedEndDate = endDate.toISOString().slice(0, 16);
     document.getElementById('dataFim').value = formattedEndDate;
 }
