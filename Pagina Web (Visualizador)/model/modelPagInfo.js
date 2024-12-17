@@ -180,16 +180,15 @@ export async function baixarCSV() {
 }
 export async function setDates() {
     const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth(); // 0-11
 
-    // Data inicial (1º dia do mês)
-    const startDate = new Date(year, month, 1);
+    // Define a data inicial como o momento atual
+    const startDate = new Date(now);
     const formattedStartDate = startDate.toISOString().slice(0, 16);
     document.getElementById('dataInicio').value = formattedStartDate;
 
-    // Data final (último dia do mês)
-    const endDate = new Date(year, month + 1, 0); // 0 retorna o último dia do mês anterior
+    // Define a data final como 24 horas após a data inicial
+    const endDate = new Date(now);
+    endDate.setHours(endDate.getHours() + 24);
     const formattedEndDate = endDate.toISOString().slice(0, 16);
     document.getElementById('dataFim').value = formattedEndDate;
 }
