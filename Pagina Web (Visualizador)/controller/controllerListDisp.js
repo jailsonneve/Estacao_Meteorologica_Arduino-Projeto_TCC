@@ -35,7 +35,8 @@ async function searchInFirebase(searchValue) {
 
     const resultadosExibidos = new Set();
 
-    snapshot.docs.forEach(async (doc) => {
+    // Processar os documentos de forma síncrona
+    for (const doc of snapshot.docs) {
         const data = doc.data();
         const { nome, descricao, end_mac, status, localizacao, lista_sensores: listaSensoresIDs, tipo_dispositivo } = data;
         const dispositivoID = doc.id;
@@ -44,12 +45,21 @@ async function searchInFirebase(searchValue) {
         if (isSearchMatch({ dispositivoID, localizacao, nome, end_mac, status, listaSensoresIDs, searchValue })) {
             if (!resultadosExibidos.has(dispositivoID)) {
                 resultadosExibidos.add(dispositivoID);
-                cardsContainer.innerHTML += createCardHTML({ nome, descricao, dthrInstalacao: "", dthrUltConexao: "", sensoresNomes: listaSensoresIDString, status, tipo_dispositivo, dispositivoID });
+                cardsContainer.innerHTML += createCardHTML({
+                    nome,
+                    descricao,
+                    dthrInstalacao: "",
+                    dthrUltConexao: "",
+                    sensoresNomes: listaSensoresIDString,
+                    status,
+                    tipo_dispositivo,
+                    dispositivoID
+                });
             }
         }
-    });
+    }
 
-    if (resultadosExibidos.size == 0) {
+    if (resultadosExibidos.size === 0) {
         cardsContainer.innerHTML = "<h2 class='text-center'>Nenhum dispositivo encontrado.</h2>";
     }
 }
