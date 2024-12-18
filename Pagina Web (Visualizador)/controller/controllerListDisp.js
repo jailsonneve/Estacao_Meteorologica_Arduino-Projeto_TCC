@@ -49,7 +49,7 @@ async function searchInFirebase(searchValue) {
         }
     });
 
-    if (resultadosExibidos.size === 0) {
+    if (resultadosExibidos.size == 0) {
         cardsContainer.innerHTML = "<h2 class='text-center'>Nenhum dispositivo encontrado.</h2>";
     }
 }
