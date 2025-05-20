@@ -21,7 +21,6 @@ TCC/
 │   └── Cópia de TCC_Code.ino
 ├── Artigo/
 │   └── Artigo Final - ESTAÇÃO METEOROLÓGICA.docx.pdf
-└── .git/
 ```
 
 ---
