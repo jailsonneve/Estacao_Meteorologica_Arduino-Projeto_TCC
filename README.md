@@ -111,9 +111,13 @@ Caso tenha dúvidas, sugestões ou queira colaborar, entre em contato com o(s) a
 
 ## 📝 Licença
 
-Este projeto está protegido pelos direitos autorais do(s) autor(es) do TCC. A reprodução ou uso deve ser feita apenas com os devidos créditos e para fins educacionais.
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](./LICENSE) para detalhes.
 
----
+```
+MIT License
+
+Copyright (c) 2025 Arthur Henrique Dai
+```
 
 <div align="center">
 Se este projeto foi útil para você, não esqueça de deixar uma ⭐ e compartilhar! 😊
