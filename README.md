@@ -39,6 +39,10 @@ Na pasta `Codigo Arduino/` está o arquivo `Cópia de TCC_Code.ino`, que contém
 
 O projeto já possui estrutura de versionamento Git localizada na pasta `.git/`, evidenciando a organização e o histórico de desenvolvimento.
 
+### Código-Fonte Pagina Web
+Na pasta `Pagina Web` está os arquivos `.html, .css e .js` necessários para a pagina web funcionar. Segue o link para acessar o `github.io`:
+**[Pagina Web](https://jailsonneve.github.io/Estacao_Meteorologica_Arduino-Projeto_TCC/Pagina%20Web%20(Visualizador)/view/templates/listEstacaoTeste.html#inicio)**  
+   Um site responsivo que exibe os dispositivos cadastrados no banco, tem o CRUD de dispositivos, permite baixar `.csv` e gera gráficos.
 ---
 
 ## 🛠️ Tecnologias Utilizadas
